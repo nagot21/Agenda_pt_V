@@ -1,8 +1,10 @@
 package br.com.alura.agenda;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
+import java.util.jar.Manifest;
 
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
@@ -77,7 +80,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         Intent intentSite = new Intent(Intent.ACTION_VIEW);
 
         String site = aluno.getSite();
-        Log.i("site", "site: " + site);
+
         if(!site.startsWith("http://")) {
             site = "http://" + site;
         }
@@ -87,10 +90,32 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         MenuItem ligar = menu.add("Ligar");
 
+        ligar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{android.Manifest.permission.CALL_PHONE}, 123);
+                } else {
+                    Intent intentLigar = new Intent(Intent.ACTION_CALL);
+                    intentLigar.setData(Uri.parse("tel:" + aluno.getTelefone()));
+                    startActivity(intentLigar);
+                }
+                return false;
+            }
+        });
+
 
         MenuItem sms = menu.add("Sms");
+        Intent intentSms = new Intent(Intent.ACTION_VIEW);
+        intentSms.setData(Uri.parse("sms:" + aluno.getTelefone()));
+        sms.setIntent(intentSms);
+
         MenuItem deletar = menu.add("Deletar");
+
         MenuItem vaiProMapa = menu.add("Vai Para Mapa");
+        Intent intentMapa = new Intent(Intent.ACTION_VIEW);
+        intentMapa.setData(Uri.parse("geo:0,0?z=14&q=" + aluno.getEndereco()));
+        vaiProMapa.setIntent(intentMapa);
 
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
