@@ -1,8 +1,10 @@
 package br.com.alura.agenda;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,8 +73,21 @@ public class ListaAlunosActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
 
-        MenuItem ligar = menu.add("Ligar");
         MenuItem irParaSite = menu.add("Ir Para Site");
+        Intent intentSite = new Intent(Intent.ACTION_VIEW);
+
+        String site = aluno.getSite();
+        Log.i("site", "site: " + site);
+        if(!site.startsWith("http://")) {
+            site = "http://" + site;
+        }
+
+        intentSite.setData(Uri.parse(site));
+        irParaSite.setIntent(intentSite);
+
+        MenuItem ligar = menu.add("Ligar");
+
+
         MenuItem sms = menu.add("Sms");
         MenuItem deletar = menu.add("Deletar");
         MenuItem vaiProMapa = menu.add("Vai Para Mapa");
