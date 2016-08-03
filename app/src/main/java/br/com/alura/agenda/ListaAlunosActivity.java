@@ -81,7 +81,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         String site = aluno.getSite();
 
-        if(!site.startsWith("http://")) {
+        if (!site.startsWith("http://")) {
             site = "http://" + site;
         }
 
@@ -93,7 +93,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ligar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{android.Manifest.permission.CALL_PHONE}, 123);
                 } else {
                     Intent intentLigar = new Intent(Intent.ACTION_CALL);
