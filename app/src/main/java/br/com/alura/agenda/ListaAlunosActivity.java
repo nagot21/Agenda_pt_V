@@ -55,6 +55,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
 
         registerForContextMenu(listaAlunos);
+
+        if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{android.Manifest.permission.RECEIVE_SMS}, 3);
+        }
     }
 
     private void carregaLista() {
