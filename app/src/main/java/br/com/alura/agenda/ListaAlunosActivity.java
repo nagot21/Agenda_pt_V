@@ -88,7 +88,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_enviar_notas:
                 AlunoDAO dao = new AlunoDAO(this);
                 List<Aluno> alunos = dao.buscaAlunos();
@@ -97,7 +97,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 AlunoConverter conversor = new AlunoConverter();
                 String json = conversor.converteParaJSON(alunos);
 
-                Toast.makeText(this, json, Toast.LENGTH_LONG).show();
+                WebClient webClient = new WebClient();
+                String resposta = webClient.post(json);
+                Toast.makeText(this, resposta, Toast.LENGTH_LONG).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
