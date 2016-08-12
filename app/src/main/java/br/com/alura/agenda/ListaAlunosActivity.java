@@ -62,6 +62,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{android.Manifest.permission.RECEIVE_SMS}, 3);
         }
+
+        if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 4);
+            ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 5);
+        }
     }
 
     private void carregaLista() {
